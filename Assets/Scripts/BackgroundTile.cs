@@ -1,18 +1,24 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class BackgroundTile : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public GameObject[] cells;
+
+
+    private void Start()
     {
-        
+        Initialize();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Initialize()
     {
-        
+        int cellToUse = Random.Range(0, cells.Length);
+        GameObject cell = Instantiate(cells[cellToUse], transform.position, Quaternion.identity);
+        cell.transform.parent = transform;
+        cell.name = gameObject.name;
     }
 }
