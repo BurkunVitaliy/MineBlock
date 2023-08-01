@@ -2,16 +2,21 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Board : MonoBehaviour
 {
     public int width, height;
     public GameObject tilePrefabs;
-    private BackgroundTile[,] allTiles;
+    public GameObject[,] allCells;
+    public GameObject[] cells;
+    private BackgroundTile[,] _allTiles;
+    
 
     private void Start()
     {
-        allTiles = new BackgroundTile[width, height];
+        _allTiles = new BackgroundTile[width, height];
+        allCells = new GameObject[width, height];
         SetUp();
     }
 
@@ -25,6 +30,11 @@ public class Board : MonoBehaviour
                 GameObject backgroundTile = Instantiate(tilePrefabs,tempPosition,Quaternion.identity);
                 backgroundTile.transform.parent = transform;
                 backgroundTile.name = "(" + i + ", " + j + " )";
+                int cellToUse = Random.Range(0, cells.Length);
+                GameObject cell = Instantiate(cells[cellToUse], tempPosition, Quaternion.identity);
+                cell.transform.parent = transform;
+                cell.name = "(" + i + ", " + j + " )";
+                allCells[i, j] = cell;
             }
         }
     }
